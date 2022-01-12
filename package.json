@@ -7,6 +7,12 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    
+    "install:server": "yarn --cwd server intall",
+    "install:client": "yarn --cwd client install",
+    "install": "yarn install:server & yarn install:client",
+    "client": "yarn --cwd client start",
+    "server": "yarn --cwd server watch",
+    "watch": "yarn server & yarn client",
+    "deploy": "yarn --cwd client build && yarn --cwd server start"
   }
 }
