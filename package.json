@@ -1,0 +1,12 @@
+{
+  "name": "nasa-mission-control-ztm",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:DRSantillan/nasa-mission-control-ztm.git",
+  "author": "Dean <dean@deansantillan.com>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    
+  }
+}
