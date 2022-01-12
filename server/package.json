@@ -1,0 +1,18 @@
+{
+  "name": "nasa-mission-control-api-server",
+  "version": "1.0.0",
+  "main": "src/server.js",
+  "author": "Dean Santillan <dean@deansantillan.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "watch": "nodemon src/server.js",
+    "start": "node src/server.js"
+  },
+  "type": "module"
+}
