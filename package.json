@@ -13,6 +13,7 @@
     "client": "yarn --cwd client start",
     "server": "yarn --cwd server watch",
     "watch": "yarn server & yarn client",
-    "deploy": "yarn --cwd client build && yarn --cwd server start"
+    "deploy": "yarn --cwd client build && yarn --cwd server start",
+    "test": "yarn --cwd server test && yarn --cwd client test"
   }
 }

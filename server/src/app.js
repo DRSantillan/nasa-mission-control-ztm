@@ -2,6 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import morgan from 'morgan';
 
 // LOCAL IMPORTS
 import planetsRouter from './routes/planets/planets.router.js';
@@ -16,6 +17,7 @@ app.use(
 		origin: 'http://localhost:3000',
 	})
 );
+app.use(morgan('combined'));
 // tell the app that you want to process everything in a json format.
 app.use(express.json());
 // serving react app public build statically within the server project
