@@ -1,9 +1,8 @@
 // local imports
-import {planets} from '../../models/planets.model.js';
+import { getAllPlanets } from '../../models/planets.model.js';
 //
-const getAllPlanets = (req, res) => {
-	console.log(planets)
-	return res.status(200).json(planets);
+const httpGetAllPlanets = (req, res) => {
+	return res.status(200).json(getAllPlanets);
 };
 
-export { getAllPlanets };
+export { httpGetAllPlanets };

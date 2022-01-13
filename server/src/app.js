@@ -22,14 +22,14 @@ app.use(morgan('combined'));
 // tell the app that you want to process everything in a json format.
 app.use(express.json());
 // serving react app public build statically within the server project
-app.use(express.static(path.join(path.resolve('public'))));
+app.use(express.static('public'));
 
 // ENDPOINTS /////
 app.use(planetsRouter);
 app.use(launchesRouter);
 // give the client the index.html without having to type it in manually
 app.get('/*', (req, res) => {
-	res.sendFile(path.join(path.resolve('public')), 'index.html');
+	return res.sendFile(path.join(path.resolve('public')), 'index.html');
 });
 
 export default app;
