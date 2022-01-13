@@ -6,6 +6,7 @@ import morgan from 'morgan';
 
 // LOCAL IMPORTS
 import planetsRouter from './routes/planets/planets.router.js';
+import launchesRouter from './routes/launches/launches.router.js';
 
 // initialize express
 const app = express();
@@ -25,9 +26,10 @@ app.use(express.static(path.join(path.resolve('public'))));
 
 // ENDPOINTS /////
 app.use(planetsRouter);
+app.use(launchesRouter);
 // give the client the index.html without having to type it in manually
-app.get('/', (req, res) => {
-	res.sendFile(path.joing(path.resolve('public')), 'index.html');
+app.get('/*', (req, res) => {
+	res.sendFile(path.join(path.resolve('public')), 'index.html');
 });
 
 export default app;
