@@ -12,11 +12,12 @@
   },
   "devDependencies": {
     "jest": "^27.4.7",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.1"
   },
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:watch": "yarn test --watch",
     "watch": "nodemon src/server.js",
     "start": "node src/server.js"
   },
