@@ -25,8 +25,8 @@ app.use(express.json());
 app.use(express.static('public'));
 
 // ENDPOINTS /////
-app.use(planetsRouter);
-app.use(launchesRouter);
+app.use('/planets', planetsRouter);
+app.use('/launches',launchesRouter);
 // give the client the index.html without having to type it in manually
 app.get('/*', (req, res) => {
 	return res.sendFile(path.join(path.resolve('public')), 'index.html');

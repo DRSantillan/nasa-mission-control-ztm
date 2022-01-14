@@ -23,8 +23,7 @@ const addNewLaunch = launch => {
 	latestFlightNo++;
 	launches.set(
 		latestFlightNo,
-		Object.assign({
-			launch,
+		Object.assign(launch, {
 			flightNumber: latestFlightNo,
 			customers: ['Zero To Mastery', 'NASA'],
 			upcoming: true,
