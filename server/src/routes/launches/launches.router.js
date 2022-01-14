@@ -6,11 +6,12 @@ import {
 	httpAbortLaunch,
 } from './launches.controller.js';
 //
+const ROUTE = '/';
 //
 const launchesRouter = express.Router();
 //
-launchesRouter.get('/', httpGetAllLaunches);
-launchesRouter.post('/', httpAddNewLaunch);
-launchesRouter.delete('/:id', httpAbortLaunch);
+launchesRouter.get(ROUTE, httpGetAllLaunches);
+launchesRouter.post(ROUTE, httpAddNewLaunch);
+launchesRouter.delete(`${ROUTE}:id`, httpAbortLaunch);
 
 export default launchesRouter;

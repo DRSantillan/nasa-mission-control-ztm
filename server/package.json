@@ -11,9 +11,12 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "jest": "^27.4.7",
     "nodemon": "^2.0.15"
   },
   "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
     "watch": "nodemon src/server.js",
     "start": "node src/server.js"
   },
