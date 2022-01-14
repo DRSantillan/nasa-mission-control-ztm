@@ -26,10 +26,11 @@ app.use(express.static('public'));
 
 // ENDPOINTS /////
 app.use('/planets', planetsRouter);
-app.use('/launches',launchesRouter);
+app.use('/launches', launchesRouter);
+
 // give the client the index.html without having to type it in manually
 app.get('/*', (req, res) => {
-	return res.sendFile(path.join(path.resolve('public')), 'index.html');
+	return res.sendFile(path.join(path.resolve('public'), 'index.html'));
 });
 
 export default app;

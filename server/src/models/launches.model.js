@@ -14,11 +14,23 @@ const launch = {
 };
 //
 launches.set(launch.flightNumber, launch);
+//
+const existsLaunchWithId = id => {
+	return launches.has(id);
+};
+//
+const abortLaunchById = id => {
+	const aborted = launches.get(id);
+	aborted.upcoming = false;
+	aborted.success = false;
 
+	return aborted;
+};
+//
 const getAllLaunches = () => {
 	return Array.from(launches.values());
 };
-
+//
 const addNewLaunch = launch => {
 	latestFlightNo++;
 	launches.set(
@@ -32,4 +44,4 @@ const addNewLaunch = launch => {
 	);
 };
 
-export { getAllLaunches, addNewLaunch };
+export { getAllLaunches, addNewLaunch, existsLaunchWithId, abortLaunchById };

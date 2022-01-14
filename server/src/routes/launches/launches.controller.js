@@ -1,11 +1,16 @@
-import { getAllLaunches, addNewLaunch } from '../../models/launches.model.js';
+import {
+	getAllLaunches,
+	addNewLaunch,
+	existsLaunchWithId,
+	abortLaunchById,
+} from '../../models/launches.model.js';
 // Retrieve all launches to the client
 const httpGetAllLaunches = (req, res) => {
 	return res.status(200).json(getAllLaunches());
 };
 // add a user generated launch to the db
 const httpAddNewLaunch = (req, res) => {
-	let launch = req.body;
+	const launch = req.body;
 
 	// Checking to see if the fields have been filled in
 	if (
@@ -30,4 +35,15 @@ const httpAddNewLaunch = (req, res) => {
 	return res.status(201).json(launch);
 };
 
-export { httpGetAllLaunches, httpAddNewLaunch };
+const httpAbortLaunch = (req, res) => {
+	const launchId = Number(req.params.id);
+
+	if (!existsLaunchWithId(launchId)) {
+		return res.status(400).json({ error: 'Launch was not found.' });
+	}
+
+	const aborted = abortLaunchById(launchId);
+	return res.status(201).json(aborted);
+};
+
+export { httpGetAllLaunches, httpAddNewLaunch, httpAbortLaunch };

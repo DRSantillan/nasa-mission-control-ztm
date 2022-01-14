@@ -2,6 +2,7 @@
 const API_URL = 'http://localhost:8000';
 const API_END_POINT_PLANETS = `${API_URL}/planets`;
 const API_END_POINT_LAUNCHES = `${API_URL}/launches`;
+console.log(API_END_POINT_LAUNCHES);
 
 const httpGetPlanets = async () => {
 	const response = await fetch(API_END_POINT_PLANETS);
@@ -27,10 +28,19 @@ const httpSubmitLaunch = async launch => {
 		};
 	}
 };
-
+// Delete launch with given ID.
 const httpAbortLaunch = async id => {
-	// TODO: Once API is ready.
-	// Delete launch with given ID.
+	try {
+		return await fetch(`${API_END_POINT_LAUNCHES}/${id}`, {
+			method: 'delete',
+			headers: { 'Content-Type': 'application/json' },
+		});
+	} catch (error) {
+		console.log(error, 'error');
+		return {
+			ok: false,
+		};
+	}
 };
 
 export { httpGetPlanets, httpGetLaunches, httpSubmitLaunch, httpAbortLaunch };
