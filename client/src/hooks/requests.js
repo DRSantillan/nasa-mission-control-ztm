@@ -1,5 +1,5 @@
 //
-const API_URL = 'http://localhost:8000';
+const API_URL = 'http://localhost:8000/v1';
 const API_END_POINT_PLANETS = `${API_URL}/planets`;
 const API_END_POINT_LAUNCHES = `${API_URL}/launches`;
 console.log(API_END_POINT_LAUNCHES);

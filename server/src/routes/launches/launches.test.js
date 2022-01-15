@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../../app.js';
 import { MongoDbConnect, MongoDbDisconnect } from '../../services/mongo.js';
 
-describe('Launches API', () => {
+describe('Launches API V1', () => {
 	//
 	beforeAll(async () => {
 		await MongoDbConnect();
@@ -12,17 +12,17 @@ describe('Launches API', () => {
 		await MongoDbDisconnect();
 	});
 	//
-	describe('Test GET /launches', () => {
+	describe('Test GET /v1/launches', () => {
 		test('It should respond with 200 success', async () => {
 			const response = await request(app)
-				.get('/launches')
+				.get('/v1/launches')
 				.expect('Content-Type', /json/)
 				.expect(200);
 		});
 	});
 
 	//
-	describe('Test: POST /launch', () => {
+	describe('Test: POST /v1/launch', () => {
 		const testLaunchData = {
 			mission: 'TEST_MISSION_234',
 			rocket: 'TEST ROCKET IS343',
@@ -43,7 +43,7 @@ describe('Launches API', () => {
 
 		test('It should respoind with 201 success', async () => {
 			const response = await request(app)
-				.post('/launches')
+				.post('/v1/launches')
 				.send(testLaunchData)
 				.expect('Content-Type', /json/)
 				.expect(201);
@@ -57,7 +57,7 @@ describe('Launches API', () => {
 		//
 		test('It should catch missing required properties', async () => {
 			const response = await request(app)
-				.post('/launches')
+				.post('/v1/launches')
 				.send(testLaunchDataWithNoDate)
 				.expect('Content-Type', /json/)
 				.expect(400);
@@ -68,7 +68,7 @@ describe('Launches API', () => {
 		});
 		test('It should catch invalid dates', async () => {
 			const response = await request(app)
-				.post('/launches')
+				.post('/v1/launches')
 				.send(testLaunchDataWithInvalidDate)
 				.expect('Content-Type', /json/)
 				.expect(400);

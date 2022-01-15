@@ -3,10 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import path from 'path';
 import morgan from 'morgan';
-
-// LOCAL IMPORTS
-import planetsRouter from './routes/planets/planets.router.js';
-import launchesRouter from './routes/launches/launches.router.js';
+import routerV1 from './routes/api.v1.js';
 
 // initialize express
 const app = express();
@@ -24,9 +21,8 @@ app.use(express.json());
 // serving react app public build statically within the server project
 app.use(express.static('public'));
 
-// ENDPOINTS /////
-app.use('/planets', planetsRouter);
-app.use('/launches', launchesRouter);
+// API EndPoint versioned
+app.use('/v1', routerV1);
 
 // give the client the index.html without having to type it in manually
 app.get('/*', (req, res) => {
