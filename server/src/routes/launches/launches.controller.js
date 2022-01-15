@@ -1,6 +1,6 @@
 import {
 	getAllLaunches,
-	addNewLaunch,
+	scheduleNewLaunch,
 	existsLaunchWithId,
 	abortLaunchById,
 } from '../../models/launches.model.js';
@@ -9,7 +9,7 @@ const httpGetAllLaunches = async (req, res) => {
 	return res.status(200).json(await getAllLaunches());
 };
 // add a user generated launch to the db
-const httpAddNewLaunch = (req, res) => {
+const httpAddNewLaunch = async (req, res) => {
 	const launch = req.body;
 
 	// Checking to see if the fields have been filled in
@@ -31,19 +31,23 @@ const httpAddNewLaunch = (req, res) => {
 	}
 
 	// Everything is good so add the launch to the array and return to client
-	addNewLaunch(launch);
+	await scheduleNewLaunch(launch);
 	return res.status(201).json(launch);
 };
 
-const httpAbortLaunch = (req, res) => {
+const httpAbortLaunch = async (req, res) => {
 	const launchId = Number(req.params.id);
+	const existsLaunch = await existsLaunchWithId(launchId);
 
-	if (!existsLaunchWithId(launchId)) {
+	if (!existsLaunch) {
 		return res.status(400).json({ error: 'Launch was not found.' });
 	}
 
-	const aborted = abortLaunchById(launchId);
-	return res.status(201).json(aborted);
+	const aborted = await abortLaunchById(launchId);
+	if (!aborted) {
+		return res.status(400).json({ error: 'Launch not aborted' });
+	}
+	return res.status(201).json({ message: 'Launch has been aborted;-(' });
 };
 
 export { httpGetAllLaunches, httpAddNewLaunch, httpAbortLaunch };
