@@ -1,3 +1,5 @@
+//import launches from './launches.schema.js';
+
 const launches = new Map();
 //
 let latestFlightNo = 100;

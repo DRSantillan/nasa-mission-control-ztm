@@ -1,8 +1,8 @@
 // local imports
 import { getAllPlanets } from '../../models/planets.model.js';
 //
-const httpGetAllPlanets = (req, res) => {
-	return res.status(200).json(getAllPlanets());
+const httpGetAllPlanets = async (req, res) => {
+	return res.status(200).json(await getAllPlanets());
 };
 
 export { httpGetAllPlanets };

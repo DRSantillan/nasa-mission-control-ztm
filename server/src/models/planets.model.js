@@ -1,10 +1,10 @@
-
 import { parse } from 'csv-parse';
 import fs from 'fs';
-import path from 'path'
+import path from 'path';
+import planets from './planets.schema.js';
 
 // init an array to hold our results
-const habitablePlanets = [];
+//const habitablePlanets = [];
 
 // filter only confirmed planets
 const isHabitablePlanet = planet =>
@@ -14,9 +14,8 @@ const isHabitablePlanet = planet =>
 	planet['koi_prad'] < 1.6;
 
 const loadPlanetsData = () => {
-
-    const __dirname = path.resolve('data')
-    const pathToDataFile = path.join(__dirname, 'kepler_data.csv')
+	const __dirname = path.resolve('data');
+	const pathToDataFile = path.join(__dirname, 'kepler_data.csv');
 	// create a stream to read the csv file on the hd.
 	// provides us with an event emitter.
 	const keplerStreamData = fs.createReadStream(pathToDataFile);
@@ -33,16 +32,17 @@ const loadPlanetsData = () => {
 			)
 			// data is the event we use to get the data
 			// filter only planets that are confirmed
-			.on('data', data => {
+			.on('data', async data => {
 				if (isHabitablePlanet(data)) {
-					habitablePlanets.push(data);
+					savePlanet(data);
 				}
 			})
 			// close the stream I think and tell the use that the processing is
 			// finished and then present the data.
-			.on('end', () => {
+			.on('end', async () => {
+				const countPlanetsFound = (await getAllPlanets()).length;
 				console.log(
-					`${habitablePlanets.length} habitable planets have been found!`
+					`${countPlanetsFound} habitable planets have been found!`
 				);
 				resolve();
 			})
@@ -53,8 +53,24 @@ const loadPlanetsData = () => {
 	});
 };
 
-const getAllPlanets = () => {
-	return habitablePlanets;
-}
+const getAllPlanets = async () => {
+	return await planets.find({}, { _id: 0, __v: 0 });
+};
+
+const savePlanet = async planet => {
+	try {
+		return await planets.updateOne(
+			{
+				keplerName: planet.kepler_name,
+			},
+			{
+				keplerName: planet.kepler_name,
+			},
+			{ upsert: true }
+		);
+	} catch (error) {
+		console.log(`Could not save planet: ${error}`);
+	}
+};
 
 export { getAllPlanets, loadPlanetsData };
