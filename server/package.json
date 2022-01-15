@@ -5,6 +5,7 @@
   "author": "Dean Santillan <dean@deansantillan.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.24.0",
     "cors": "^2.8.5",
     "csv-parse": "^5.0.4",
     "express": "^4.17.2",

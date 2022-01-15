@@ -1,3 +1,5 @@
+//
+import axios from 'axios';
 import launchesMongoDB from './launches.schema.js';
 import planets from './planets.schema.js';
 
@@ -5,7 +7,7 @@ import planets from './planets.schema.js';
 const DEFAULT_FLIGHT_NO = 99;
 //
 // const launch = {
-// 	flightNumber: 100,
+// 	flightNumber: 100,  // flight_number
 // 	mission: 'Kepler Exploration X',
 // 	rocket: 'Explorer IS1',
 // 	launchDate: new Date('December 23, 2039'),
@@ -14,6 +16,61 @@ const DEFAULT_FLIGHT_NO = 99;
 // 	upcoming: true,
 // 	success: true,
 // };
+//
+
+// map spacex names to map
+// flightNumber: flight_number
+// mission: //name
+// rocket: // rocket.name
+// launchDate: //date_local
+// target // not applicabel
+// upcoming: // upcoming
+// success: // success
+// customers: // payload.customers for each payload
+
+// SpaceX API Url
+const SPACEX_API_URL = 'https://api.spacexdata.com/v4/launches/query';
+
+const loadLaunchData = async () => {
+	console.log('Downloading data from the Space X');
+	const response = await axios.post(SPACEX_API_URL, {
+		query: {},
+		options: {
+			populate: [
+				{
+					path: 'rocket',
+					select: { name: 1 },
+				},
+				{
+					path: 'payloads',
+					select: { customers: 1 },
+				},
+			],
+		},
+	});
+
+	//
+	const launchDocs = response.data.docs;
+	
+	for (const launchDoc of launchDocs) {
+		const payloads = launchDoc['payloads'];
+		const customers = payloads.flatMap(payload => {
+			payload['customers'];
+		});
+		const launch = {
+			flightNumber: launchDoc['flight_number'],
+			mission: launchDoc['name'],
+			rocket: launchDoc['rocket']['name'],
+			launchDate: launchDoc['date_local'],
+			//target: launchDoc[sd],
+			upcoming: launchDoc['upcoming'],
+			success: launchDoc['success'],
+			customers,
+		};
+		console.log(`${launch.flightNumber} ${launch.mission}`);
+	}
+	
+};
 
 //
 const existsLaunchWithId = async id => {
@@ -25,6 +82,7 @@ const existsLaunchWithId = async id => {
 		);
 	}
 };
+
 //
 const abortLaunchById = async id => {
 	try {
@@ -38,6 +96,7 @@ const abortLaunchById = async id => {
 		);
 	}
 };
+
 //
 const getAllLaunches = async () => {
 	try {
@@ -49,6 +108,7 @@ const getAllLaunches = async () => {
 	}
 };
 
+//
 const getLatestFlightNumber = async () => {
 	try {
 		const latestLaunchNo = await launchesMongoDB
@@ -64,6 +124,7 @@ const getLatestFlightNumber = async () => {
 	}
 };
 
+//
 const saveLaunch = async launch => {
 	try {
 		const planet = await planets
@@ -85,8 +146,8 @@ const saveLaunch = async launch => {
 		console.error(`Could not save launch: ${error}`);
 	}
 };
-//
 
+//
 const scheduleNewLaunch = async launch => {
 	try {
 		const newFlightNumber = (await getLatestFlightNumber()) + 1;
@@ -104,7 +165,6 @@ const scheduleNewLaunch = async launch => {
 		);
 	}
 };
-//
 
 //saveLaunch(launch);
 export {
@@ -112,4 +172,5 @@ export {
 	existsLaunchWithId,
 	abortLaunchById,
 	scheduleNewLaunch,
+	loadLaunchData,
 };
