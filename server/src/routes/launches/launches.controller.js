@@ -5,8 +5,8 @@ import {
 	abortLaunchById,
 } from '../../models/launches.model.js';
 // Retrieve all launches to the client
-const httpGetAllLaunches = (req, res) => {
-	return res.status(200).json(getAllLaunches());
+const httpGetAllLaunches = async (req, res) => {
+	return res.status(200).json(await getAllLaunches());
 };
 // add a user generated launch to the db
 const httpAddNewLaunch = (req, res) => {
