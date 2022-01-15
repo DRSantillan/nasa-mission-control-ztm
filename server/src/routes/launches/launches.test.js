@@ -26,22 +26,22 @@ describe('Launches API', () => {
 		const testLaunchData = {
 			mission: 'TEST_MISSION_234',
 			rocket: 'TEST ROCKET IS343',
-			target: 'KEPLER',
+			target: 'Kepler-62 f',
 			launchDate: 'January 22, 2023',
 		};
 		const testLaunchDataWithNoDate = {
 			mission: 'TEST_MISSION_234',
 			rocket: 'TEST ROCKET IS343',
-			target: 'KEPLER',
+			target: 'Kepler-62 f',
 		};
 		const testLaunchDataWithInvalidDate = {
 			mission: 'TEST_MISSION_234',
 			rocket: 'TEST ROCKET IS343',
-			target: 'KEPLER',
+			target: 'Kepler-62 f',
 			launchDate: 'test date',
 		};
 
-		test('It should respoind with 200 success', async () => {
+		test('It should respoind with 201 success', async () => {
 			const response = await request(app)
 				.post('/launches')
 				.send(testLaunchData)
