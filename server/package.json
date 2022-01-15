@@ -18,11 +18,14 @@
     "supertest": "^6.2.1"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --colors",
     "test:watch": "yarn test --watch",
     "watch": "nodemon src/server.js",
     "start": "node src/server.js",
     "cluster": "pm2 start src/server.js -i max"
   },
-  "type": "module"
+  "type": "module",
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
