@@ -1,6 +1,10 @@
 // built-in libs
 import http from 'http';
+import dotenv from 'dotenv';
+
 import app from './app.js';
+dotenv.config();
+
 import { MongoDbConnect } from './services/mongo.js';
 //
 import { loadPlanetsData } from './models/planets.model.js';
@@ -17,7 +21,7 @@ const startServer = async () => {
 	await MongoDbConnect();
 	// load planets data to use with app.
 	await loadPlanetsData();
-	//
+	// load spacex launch data
 	await loadLaunchData();
 	// listening for requests
 	server.listen(PORT, () => {

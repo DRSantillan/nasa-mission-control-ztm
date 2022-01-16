@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-
+import dotenv from 'dotenv';
+dotenv.config();
 // MONGO_DB Connection
-const MONGO_DB_URL =
-	'mongodb+srv://nasa-api:5savVYyE98wGfsP@nasacluster.cbrcj.mongodb.net/nasa-db?retryWrites=true&w=majority';
+const MONGO_DB_URL = process.env.MONGO_DB_URL;
 mongoose.connection.on('open', () => {
 	console.log('MongoDB connection is ready...');
 });
@@ -17,7 +17,7 @@ const MongoDbConnect = async () => {
 
 //
 const MongoDbDisconnect = async () => {
-    await mongoose.disconnect();
-}
+	await mongoose.disconnect();
+};
 
 export { MongoDbConnect, MongoDbDisconnect };

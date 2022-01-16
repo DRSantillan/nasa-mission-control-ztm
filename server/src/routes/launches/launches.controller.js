@@ -4,9 +4,14 @@ import {
 	existsLaunchWithId,
 	abortLaunchById,
 } from '../../models/launches.model.js';
+
+import { getPagination } from '../../services/query.js';
 // Retrieve all launches to the client
 const httpGetAllLaunches = async (req, res) => {
-	return res.status(200).json(await getAllLaunches());
+	console.log(req.query);
+	const { skip, limit } = getPagination(req.query);
+	const launches = await getAllLaunches(skip, limit);
+	return res.status(200).json(launches);
 };
 // add a user generated launch to the db
 const httpAddNewLaunch = async (req, res) => {
