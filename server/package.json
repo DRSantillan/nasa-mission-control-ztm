@@ -20,7 +20,7 @@
     "supertest": "^6.2.1"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/.bin/jest --colors",
+    "test": "node --experimental-vm-modules $(yarn bin jest)",
     "test:watch": "yarn test --watch",
     "watch": "nodemon src/server.js",
     "start": "node src/server.js",
