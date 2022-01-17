@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 // MONGO_DB Connection
 const MONGO_DB_URL = process.env.MONGO_DB_URL;
+
 mongoose.connection.on('open', () => {
 	console.log('MongoDB connection is ready...');
 });
